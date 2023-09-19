@@ -19,6 +19,8 @@ export default function Home() {
         type: undefined,
     });
 
+    console.log({ state });
+
     return (
         <main className="p-10">
             <h2 className="text-xl font-bold">useFormState demo</h2>
