@@ -28,6 +28,7 @@ export default function Home() {
     return (
         <main className="p-10">
             <h2 className="text-xl font-bold">useFormState demo</h2>
+            <h1>Disable JavaScript to test with Progressive Enhancement</h1>
 
             {state?.type === "success" && <Alert>{state.message}</Alert>}
 
