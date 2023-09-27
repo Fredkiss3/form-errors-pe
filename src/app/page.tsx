@@ -1,12 +1,16 @@
 "use client";
-import { experimental_useFormState as useFormState } from "react-dom";
+import {
+    experimental_useFormState as useFormState,
+    experimental_useFormStatus as useFormStatus,
+} from "react-dom";
+
 import { action } from "./_action";
 
 function Alert(props: { children: React.ReactNode }) {
     return (
         <div
             role="alert"
-            className="border border-teal-500 p-2 rounded-md text-teal-400 bg-teal-100/50"
+            className="border border-teal-700 p-2 rounded-md text-teal-700 bg-teal-100"
         >
             {props.children}
         </div>
@@ -18,8 +22,6 @@ export default function Home() {
         message: null,
         type: undefined,
     });
-
-    console.log({ state });
 
     return (
         <main className="p-10">
@@ -45,7 +47,11 @@ export default function Home() {
                     }}
                     placeholder="John Doe"
                     aria-describedby={`name-error`}
-                    className="border rounded-md p-2"
+                    className={`border rounded-md p-2 ${
+                        state?.type === "error" && state?.errors?.name
+                            ? "accent-red-400"
+                            : ""
+                    }`}
                 />
 
                 {state?.type === "error" && state?.errors?.name && (
@@ -63,7 +69,11 @@ export default function Home() {
                     name="message"
                     placeholder="I love cheese"
                     aria-describedby={`message-error`}
-                    className="border rounded-md p-2"
+                    className={`border rounded-md p-2 ${
+                        state?.type === "error" && state?.errors?.message
+                            ? "accent-red-400"
+                            : ""
+                    }`}
                 />
 
                 {state?.type === "error" && state?.errors?.message && (
@@ -72,10 +82,26 @@ export default function Home() {
                     </span>
                 )}
 
-                <button className="bg-blue-400 rounded-md text-white px-4 py-2">
-                    Submit
-                </button>
+                <SubmitButton />
             </form>
         </main>
+    );
+}
+
+function SubmitButton() {
+    const status = useFormStatus();
+    return (
+        <button
+            aria-disabled={status.pending}
+            onClick={(e) => {
+                // prevent multiple submits
+                if (status.pending) e.preventDefault();
+            }}
+            className={`rounded-md text-white px-4 py-2 ${
+                status.pending ? "bg-blue-300" : "bg-blue-400"
+            }`}
+        >
+            {status.pending ? "Submiting..." : "Submit"}
+        </button>
     );
 }

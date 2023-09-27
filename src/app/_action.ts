@@ -17,7 +17,13 @@ type ActionResult =
       }
     | { type: undefined; message: null };
 
+function wait(ms: number): Promise<void> {
+    // Wait for the specified amount of time
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function action(_: ActionResult, payload: FormData) {
+    await wait(500);
     const result = formSchema.safeParse(Object.fromEntries(payload.entries()));
 
     console.dir(
