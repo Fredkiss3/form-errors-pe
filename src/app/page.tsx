@@ -1,5 +1,7 @@
 "use client";
 import {
+    // see ./globals.d.ts at the root for the types
+    // this will come in a new versoin of @types/react-dom https://github.com/DefinitelyTyped/DefinitelyTyped/pull/66726
     experimental_useFormState as useFormState,
     experimental_useFormStatus as useFormStatus,
 } from "react-dom";
