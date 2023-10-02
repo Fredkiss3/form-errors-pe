@@ -49,6 +49,9 @@ export default function Home() {
                         width: "100%",
                     }}
                     placeholder="John Doe"
+                    defaultValue={
+                        state?.type === "error" ? state.formData.name : ""
+                    }
                     aria-describedby={`name-error`}
                     className={`border rounded-md p-2 ${
                         state?.type === "error" && state?.errors?.name
@@ -69,6 +72,9 @@ export default function Home() {
                     style={{
                         width: "100%",
                     }}
+                    defaultValue={
+                        state?.type === "error" ? state.formData.message : ""
+                    }
                     name="message"
                     placeholder="I love cheese"
                     aria-describedby={`message-error`}

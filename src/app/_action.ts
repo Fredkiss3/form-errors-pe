@@ -14,6 +14,7 @@ type ActionResult =
     | {
           type: "error";
           errors: Record<string, string[] | undefined>;
+          formData: Partial<z.TypeOf<typeof formSchema>>;
       }
     | { type: undefined; message: null };
 
@@ -40,5 +41,9 @@ export async function action(_: ActionResult, payload: FormData) {
     return {
         type: "error" as const,
         errors: result.error.flatten().fieldErrors,
+        formData: {
+            name: payload.get("name")?.toString(),
+            message: payload.get("message")?.toString(),
+        },
     };
 }
